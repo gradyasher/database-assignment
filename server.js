@@ -1,13 +1,13 @@
-const bodyParser = require('body-parser')
-const express = require('express')
-const mongoose = require('mongoose')
+const bodyParser = require('body-parser');
+const express = require('express');
+const mongoose = require('mongoose');
 
-mongoose.Promise = global.Promise
+mongoose.Promise = global.Promise;
 
-const {PORT, DATABASE_URL} = require('./config')
-const {Blog} = require('./models')
-const app = express()
-app.use(bodyParser.json())
+const {Blog} = require('./models');
+
+const app = express();
+app.use(bodyParser.json());
 
 app.get('/blogs', (req,res) => {
 	const filters = {}
@@ -104,39 +104,15 @@ app.use("*", function(req, res) {
 	res.status(500).json({message: "Not Found"})
 })
 
-// let server 
+const startServer = (err) => { 
+	if(err){
+		return console.error(err)
+	}
+	app.listen(process.env.PORT || 8080, () => {
+  	console.log(`Your app is listening on port ${process.env.PORT || 8080}`);
+	});
+};
 
-// function runServer(databaseUrl=DATABASE_URL, port=PORT) {
+mongoose.connect('mongodb://user1:user1@ds161021.mlab.com:61021/database-assignment', startServer);
 
-//   return new Promise((resolve, reject) => {
-//     mongoose.connect(databaseUrl, err => {
-//       if (err) {
-//         return reject(err)
-//       }
-//       server = app.listen(port, () => {
-//         console.log(`Your app is listening on port ${port}`)
-//         resolve()
-//       })
-//       .on('error', err => {
-//         mongoose.disconnect()
-//         reject(err)
-//       })
-//     })
-//   })
-// }
 
-// function closeServer() {
-//   return mongoose.disconnect().then(() => {
-//      return new Promise((resolve, reject) => {
-//        console.log('Closing server')
-//        server.close(err => {
-//            if (err) {
-//                return reject(err)
-//            }
-//            resolve()
-//        })
-//      })
-//   })
-// }
-
-app.listen()
