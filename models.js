@@ -27,4 +27,6 @@ blogSchema.methods.apiRepr = function() {
 
 const Blog = mongoose.model(`Blog`, blogSchema)
 
-module.exports = {Blog}
+const Grady = "grady"
+
+module.exports = {Blog, Grady}

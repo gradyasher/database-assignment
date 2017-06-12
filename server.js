@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-const {Blog} = require('./models');
+const {Blog, Grady} = require('./models');
+console.log(Grady)
 
 const app = express();
 app.use(bodyParser.json());
@@ -84,6 +85,7 @@ app.put('/blogs/:id', (req, res) => {
 			toUpdate[field] = req.body[field]
 		}
 	})
+	console.log(toUpdate)
 
 	Blog
 	.findByIdAndUpdate(req.params.id, {$set: toUpdate})
